@@ -79,7 +79,7 @@ class Cmd cmd where
   cmdEnv :: Maybe [(String,String)] -> String -> cmd
 
   -- | Like 'cmdEnv' but doesn't set environment variables
-  cmd :: Cmd cmd => String -> cmd
+  cmd :: String -> cmd
   cmd = cmdEnv Nothing
 
 instance Cmd cmd => Cmd (String -> cmd) where
@@ -329,4 +329,11 @@ shellPiped env' cmdStr = CreateProcess
     , close_fds    = False
     , create_group = False
     , delegate_ctlc = False
+    -- jml: work with process-1.3
+    , detach_console     = False
+    , create_new_console = False
+    , new_session        = False
+    -- jml: work with process-1.4
+    , child_group  = Nothing
+    , child_user   = Nothing
     }
